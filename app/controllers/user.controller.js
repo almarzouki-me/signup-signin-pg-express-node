@@ -2,7 +2,7 @@ const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     if (!req.body.userName) {
         res.status(400).send({
             message: "User can not be empty!"
@@ -16,7 +16,7 @@ exports.create = (req, res) => {
         password: req.body.password
     };
 
-    User.create(user)
+    await User.create(user)
     .then(data => {
       res.send(data);
     })
@@ -28,10 +28,10 @@ exports.create = (req, res) => {
     });
 }
 
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
   const id = req.params.id;
 
-  User.findByPk(id)
+  await User.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);
@@ -47,6 +47,3 @@ exports.findOne = (req, res) => {
       });
     });
 };
-
-
-
